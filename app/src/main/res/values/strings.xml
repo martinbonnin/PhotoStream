@@ -5,7 +5,7 @@
     <string name="start">start</string>
     <string name="stop">stop</string>
     <string name="press_start">Press start to start the photo stream</string>
-    <string name="starting">Photos will start appearing here as you walk.... The GPS is warming up... Or maybe no photo has ever been taken here. It\'s
+    <string name="starting">Photos will start appearing here as you walk.... The GPS is warming up 🛰️... Or maybe no photo has ever been taken here.\nIt\'s
         time to exercise 🚶!
     </string>
 </resources>

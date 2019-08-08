@@ -1,6 +1,5 @@
 package net.mbonnin.photostream
 
-import android.graphics.Color
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -24,14 +23,8 @@ class MainAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view = when (viewType) {
-            TYPE_TEXT -> {
-                val textView = TextView(parent.context)
-                textView.layoutParams = RecyclerView.LayoutParams(MATCH_PARENT, MATCH_PARENT)
-                textView.gravity = Gravity.CENTER
-                textView.setPadding(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50f, textView.resources.displayMetrics).toInt())
-                textView
-            }
-            else -> LayoutInflater.from(parent.context).inflate(R.layout.image, parent, false)
+            TYPE_TEXT -> LayoutInflater.from(parent.context).inflate(R.layout.text_item, parent, false)
+            else -> LayoutInflater.from(parent.context).inflate(R.layout.image_item, parent, false)
         }
 
         return object:RecyclerView.ViewHolder(view) {}

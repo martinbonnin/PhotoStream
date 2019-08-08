@@ -25,21 +25,6 @@ class MainActivity : AppCompatActivity() {
 
     fun startTracking() {
         locationMonitor.start()
-
-        button.setText(R.string.stop)
-        updateAdapterJob = GlobalScope.launch(Dispatchers.Main) {
-            locationMonitor.photos().collect {
-                if (it.isEmpty()) {
-                    adapter.setItems(listOf(MainAdapter.Item.Text(getString(R.string.starting))))
-                } else {
-                    val items = it.map {
-                        MainAdapter.Item.Image(it)
-                    }
-                    adapter.setItems(items)
-                }
-            }
-        }
-
         MainService.start(this)
     }
 
@@ -61,12 +46,6 @@ class MainActivity : AppCompatActivity() {
 
     fun stopTracking() {
         locationMonitor.stop()
-
-        button.setText(R.string.start)
-        adapter.setItems(listOf(MainAdapter.Item.Text(getString(R.string.press_start))))
-        updateAdapterJob?.cancel()
-        updateAdapterJob = null
-
         MainService.stop(this)
     }
 
@@ -74,8 +53,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        button.setText(R.string.start)
-        adapter.setItems(listOf(MainAdapter.Item.Text(getString(R.string.press_start))))
+        updateUI()
+
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
 
@@ -84,6 +63,30 @@ class MainActivity : AppCompatActivity() {
                 stopTracking()
             } else {
                 startTrackingIfPermissions()
+            }
+            updateUI()
+        }
+    }
+
+    private fun updateUI() {
+        if (!locationMonitor.isRunning()) {
+            button.setText(R.string.start)
+            adapter.setItems(listOf(MainAdapter.Item.Text(getString(R.string.press_start))))
+            updateAdapterJob?.cancel()
+            updateAdapterJob = null
+        } else {
+            button.setText(R.string.stop)
+            updateAdapterJob = GlobalScope.launch(Dispatchers.Main) {
+                locationMonitor.photos().collect {
+                    if (it.isEmpty()) {
+                        adapter.setItems(listOf(MainAdapter.Item.Text(getString(R.string.starting))))
+                    } else {
+                        val items = it.map {
+                            MainAdapter.Item.Image(it)
+                        }
+                        adapter.setItems(items)
+                    }
+                }
             }
         }
     }

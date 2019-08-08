@@ -1,0 +1,14 @@
+CREATE TABLE photo (
+    url TEXT NOT NULL,
+    addedTimeMillis INTEGER NOT NULL
+);
+
+selectAll:
+SELECT url FROM photo ORDER BY addedTimeMillis DESC;
+
+insert:
+INSERT INTO photo(url, addedTimeMillis)
+VALUES (?, ?);
+
+delete:
+DELETE FROM photo;

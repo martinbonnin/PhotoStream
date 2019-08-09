@@ -49,6 +49,13 @@ class MainActivity : AppCompatActivity() {
         MainService.stop(this)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+
+        updateAdapterJob?.cancel()
+        updateAdapterJob = null
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

@@ -37,6 +37,7 @@ class MainService : Service() {
         val notification = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
             .setContentText(getString(R.string.app_running))
             .addAction(R.drawable.ic_crop_original_black_24dp, getString(R.string.view_stream), pendingIntent)
+            .setSmallIcon(R.drawable.ic_terrain_black_24dp)
             .build()
 
         startForeground(NOTIFICATION_ID, notification)
